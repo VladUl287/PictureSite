@@ -1,0 +1,46 @@
+nav {
+    width: 100%;
+    background-color: #001524;
+}
+
+nav ul {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: .6em .3em;
+    list-style: none;
+}
+
+nav ul li {
+    margin: 0 .2em;
+}
+
+nav ul li.right {
+    margin-left: auto;
+} 
+
+nav ul a {
+    color: #ffecd1;
+    text-decoration: none;
+}
+
+nav ul button {
+    padding: 0;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    color: #ffecd1;
+    background-color: transparent;
+}
+
+nav ul a,
+nav ul button {
+    padding: .3em .5em;
+    transition: color 100ms ease, background-color 150ms linear;
+}
+
+nav ul a:hover,
+nav ul button:hover {
+    color: #000;
+    background-color: #ffecd1;
+}

@@ -1,0 +1,107 @@
+.createWrap {
+    width: 60%;
+    margin: 10px auto;
+    overflow: hidden;
+}
+
+.createWrap * {
+    font-size: 15px;
+}
+
+.selectFileWrap {
+    display: flex;
+    align-items: center;
+}
+
+.selectFileWrap input[type=file] {
+    display: none;
+}
+
+.selectFileWrap p {
+    color: #e0e0e0;
+    margin: 0 0 0 .5em;
+}
+
+.fileInput {
+    cursor: pointer;
+    width: fit-content;
+    min-width: fit-content;
+    padding: .3em 1em;
+    border-radius: 1em;
+    color: #219ebc;
+    border: 1px solid #219ebc;
+    background-color: transparent;
+    transition: background-color 150ms linear, color 100ms ease;
+}
+
+.fileInput:hover,
+.fileInput:focus {
+    color: #e0e0e0;
+    background-color: #219ebc;
+}
+
+/* .tagZone {
+    margin: 0 0 1em 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.searchTags {
+    position: relative;
+}
+
+.searchTags input[type=text] {
+    width: 100%;
+    outline: none;
+    font-size: large;
+}
+
+.searchTags input[type=text]::placeholder {
+    font-style: italic;
+}
+
+.searchResult {
+    width: 100%;
+    position: absolute;
+    background-color: black;
+    z-index: 999;
+}
+
+.searchResult > div {
+    cursor: pointer;
+}
+
+.searchResult p {
+    margin: 0;
+    color: #fff;
+    padding: .5em;
+}
+
+.selectedTags {
+    display: flex;
+}
+
+.selectedTags > div {
+    background-color: red;
+    margin: 0 .5em;
+}
+
+.selectedTag > * {
+    display: inline-block;
+}
+
+.selectedTags p {
+    margin: .2em;
+}
+
+.selectImg {
+    display: block;
+    max-width: 100%;
+}
+
+.createForm .submitButton {
+    padding: .5em 1em;
+    border: none;
+    color: #fff;
+    background-color: lightblue;
+} */

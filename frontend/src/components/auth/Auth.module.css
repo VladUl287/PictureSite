@@ -1,0 +1,128 @@
+.formsAuthWrap {
+    display: flex;
+    width: 40%;
+    max-width: 360px;
+    min-width: 270px;
+    align-items: center;
+    height: 100vh;
+    margin: 0 auto;
+
+    --main-color: #f8fcff;
+    --main-gray: #ffffff80;
+    --error: #e20000;
+}
+
+.forms {
+    overflow: hidden;
+    border-radius: .7em;
+    width: 100%;
+    height: fit-content;
+    background-color: #0c0f14;
+}
+
+.toggleType {
+    display: flex;
+}
+
+.toggleType button {
+    user-select: none;
+    padding: .5em 0;
+    cursor: pointer;
+    width: 100%;
+    border: none;
+    color: var(--main-color);
+    font-size: large;
+    background-color: transparent;
+    border-bottom: 1px solid var(--main-color);
+    transition: border-bottom 150ms ease, background-color 150ms linear;
+}
+
+.toggleType button.active {
+    background-color: #dee2e680;
+}
+
+.toggleType button:hover {
+    background-color: #dee2e680;
+}
+
+.formsZone {
+    padding: 1.5em 1em;
+}
+
+.formsAuthWrap form div {
+    margin: 0 0 1.5em 0;
+}
+
+.formsAuthWrap form input {
+    font-size: medium;
+}
+
+.formsAuthWrap form input[type=text] {
+    color: var(--main-color);
+    padding: .2em .3em;
+    width: 100%;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid var(--main-gray);
+    background-color: transparent;
+}
+
+.formsAuthWrap form input[type=text]::placeholder {
+    user-select: none;
+}
+
+.formsAuthWrap form input[type=text].validateError {
+    border-bottom-color: var(--error);
+}
+
+.formsAuthWrap form input[type=text].validateError::placeholder {
+    color: var(--error)
+}
+
+.formsAuthWrap form>div {
+    position: relative;
+}
+
+.formsAuthWrap form .textError {
+    user-select: none;
+    position: absolute;
+    top: 100%;
+    left: .2em;
+    font-size: 11px;
+    color: var(--error);
+}
+
+.formsAuthWrap form button {
+    min-height: 31px;
+    min-width: 200px;
+    border-radius: 2em;
+    padding: .3em 1.5em;
+    border: none;
+    display: block;
+    margin: 0 auto;
+    cursor: pointer;
+    font-size: medium;
+    user-select: none;
+}
+
+.formsAuthWrap .loading {
+    display: block;
+    margin: 0 auto;
+    width: 1.3em;
+    height: 1.3em;
+    border-radius: 50%;
+    color: #3c50fa;
+    border: 2px solid currentColor;
+    border-color: currentColor transparent;
+    animation: loading 1s ease infinite;
+}
+
+@keyframes loading {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
