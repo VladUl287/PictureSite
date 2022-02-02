@@ -4,10 +4,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace react_Api.ModelsDto
 {
-    public class CreatePictureModel
+    public class CreateModel
     {
         [Required]
-        public IFormFile Image { get; set; }
+        public IFormFile Picture { get; set; }
+        [Required]
+        public bool Vertical { get; set; } = false;
         [Required]
         public Tag[] Tags { get; set; }
     }

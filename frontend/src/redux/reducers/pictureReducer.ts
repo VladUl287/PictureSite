@@ -1,10 +1,10 @@
-import { Picture } from "../../models/Picture";
-import { Tag } from "../../models/Tag";
+import { PictureModel } from "../../models/PictureModel";
+import { TagModel } from "../../models/TagModel";
 import { SET_PICTURES, SET_TAGS } from "../types";
 
 const initialState = {
-    pictures: new Array<Picture>(),
-    tags: new Array<Tag>()
+    pictures: new Array<PictureModel>(),
+    tags: new Array<TagModel>()
 }
 
 export const pictureReducer = (state = initialState, action: PictureAction) => {
@@ -28,7 +28,7 @@ export const pictureReducer = (state = initialState, action: PictureAction) => {
 type PictureAction = {
     type: string,
     payload: {
-        pictures: Picture[],
-        tags: Tag[]
+        pictures: PictureModel[],
+        tags: TagModel[]
     }
 }

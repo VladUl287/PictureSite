@@ -5,6 +5,7 @@ import AuthContainer from "./components/auth/AuthContainer";
 import { Navigate, Route, Routes } from "react-router-dom";
 import CreateImage from "./components/create/Create";
 import Main from "./components/main/Main";
+import Picture from "./components/picture/Picture";
 
 type RouteProps = { isAuth: boolean };
 
@@ -14,6 +15,11 @@ const AppRoutes: FC<RouteProps> = (props: RouteProps) => {
             <Route path="/create" element={
                 <AuthGuard>
                     <CreateImage />
+                </AuthGuard>
+            } />
+             <Route path="/picture/:id" element={
+                <AuthGuard>
+                    <Picture />
                 </AuthGuard>
             } />
             <Route path="/main" element={

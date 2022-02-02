@@ -7,6 +7,8 @@ namespace react_Api.ModelsDto
     {
         public int Id { get; set; }
         public string View { get; set; }
+        public int OriginalWidth { get; set; }
+        public int OriginalHeight { get; set; }
         public ICollection<Tag> Tags { get; set; }
     }
 }

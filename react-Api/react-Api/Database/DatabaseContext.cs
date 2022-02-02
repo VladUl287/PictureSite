@@ -87,7 +87,11 @@ namespace react_Api.Database
             modelBuilder.Entity<Picture>(build =>
             {
                 build.HasKey(e => e.Id);
-                
+
+                build.Property(e => e.Vertical)
+                    .IsRequired()
+                    .HasDefaultValue(false);
+
                 build.Property(e => e.Path)
                     .IsRequired();
             });

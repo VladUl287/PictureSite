@@ -2,6 +2,9 @@
     width: 60%;
     margin: 10px auto;
     overflow: hidden;
+
+    --blue-clr: #219ebc;
+    --yellow-clr: #ffb703;
 }
 
 .createWrap * {
@@ -28,43 +31,42 @@
     min-width: fit-content;
     padding: .3em 1em;
     border-radius: 1em;
-    color: #219ebc;
-    border: 1px solid #219ebc;
+    color: var(--blue-clr);
+    border: 1px solid var(--blue-clr);
     background-color: transparent;
-    transition: background-color 150ms linear, color 100ms ease;
+    transition: background-color 100ms linear, color 100ms ease;
 }
 
 .fileInput:hover,
 .fileInput:focus {
     color: #e0e0e0;
-    background-color: #219ebc;
+    background-color: var(--blue-clr);
 }
 
-/* .tagZone {
-    margin: 0 0 1em 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+.tagZone {
+    margin: .7em 0;
 }
 
 .searchTags {
     position: relative;
+    background-color: black;
 }
 
 .searchTags input[type=text] {
     width: 100%;
     outline: none;
-    font-size: large;
 }
 
 .searchTags input[type=text]::placeholder {
+    user-select: none;
     font-style: italic;
 }
 
 .searchResult {
     width: 100%;
     position: absolute;
-    background-color: black;
     z-index: 999;
+    background-color: black;
 }
 
 .searchResult > div {
@@ -75,33 +77,63 @@
     margin: 0;
     color: #fff;
     padding: .5em;
+    user-select: none;
 }
 
 .selectedTags {
+    margin: .7em 0;
     display: flex;
+    flex-wrap: wrap;
+    column-gap: .3em;
+    row-gap: .5em;
+    align-items: center;
 }
 
-.selectedTags > div {
-    background-color: red;
-    margin: 0 .5em;
+.selectedTag {
+    cursor: pointer;
+    border-radius: 1em;
+    padding: .3em .8em;
+    width: fit-content;
+    background-color: #808080;
+    transition: background-color 100ms linear, color 100ms ease;
+}
+
+.selectedTag:hover,
+.selectedTag:focus {
+    color: #e0e0e0;
+    background-color: #e33e19;
 }
 
 .selectedTag > * {
     display: inline-block;
 }
 
-.selectedTags p {
-    margin: .2em;
+.selectedTag p {
+    margin: 0;
+    user-select: none;
+}
+
+.imgZone {
+    margin: .7em 0;
+}
+
+.submitButton {
+    cursor: pointer;
+    padding: .3em 1em;
+    border-radius: .2em;
+    color: var(--yellow-clr);
+    background-color: transparent;
+    border: 1px solid var(--yellow-clr);
+    transition: background-color 120ms linear, color 100ms ease;
+}
+
+.submitButton:hover,
+.submitButton:focus {
+    color: #e0e0e0;
+    background-color: var(--yellow-clr);
 }
 
 .selectImg {
     display: block;
     max-width: 100%;
 }
-
-.createForm .submitButton {
-    padding: .5em 1em;
-    border: none;
-    color: #fff;
-    background-color: lightblue;
-} */
