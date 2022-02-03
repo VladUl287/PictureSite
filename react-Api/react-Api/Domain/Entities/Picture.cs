@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using react_Api.Domain;
+using System.Collections.Generic;
 
 namespace react_Api.Database.Models
 {
-    public class Picture
+    public class Picture : BaseEntity
     {
-        public int Id { get; set; }
-        public string Path { get; set; }
+        public string Name { get; set; }
         public int OriginalWidth { get; set; }
         public int OriginalHeight { get; set; }
         public bool Vertical { get; set; }

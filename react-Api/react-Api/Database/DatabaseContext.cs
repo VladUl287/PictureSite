@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using react_Api.Database.Models;
-using System;
+﻿using System;
 using System.Diagnostics;
+using react_Api.Database.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace react_Api.Database
 {
@@ -92,7 +92,7 @@ namespace react_Api.Database
                     .IsRequired()
                     .HasDefaultValue(false);
 
-                build.Property(e => e.Path)
+                build.Property(e => e.Name)
                     .IsRequired();
             });
 

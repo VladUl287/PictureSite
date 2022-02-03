@@ -1,7 +1,7 @@
 ﻿using react_Api.Database.Models;
 using System.Collections.Generic;
 
-namespace react_Api.ModelsDto
+namespace react_Api.ViewModels
 {
     public class PictureModel
     {
@@ -9,6 +9,7 @@ namespace react_Api.ModelsDto
         public string View { get; set; }
         public int OriginalWidth { get; set; }
         public int OriginalHeight { get; set; }
+        public bool Vertical { get; set; } = false;
         public ICollection<Tag> Tags { get; set; }
     }
 }

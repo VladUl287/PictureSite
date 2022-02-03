@@ -429,6 +429,15 @@
           }
         }
       },
+      "OneOf/3.0.211": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/OneOf.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/OneOf.dll": {}
+        }
+      },
       "SixLabors.ImageSharp/1.0.4": {
         "type": "package",
         "compile": {
@@ -1494,6 +1503,21 @@
         "version.txt"
       ]
     },
+    "OneOf/3.0.211": {
+      "sha512": "c1VHL1J28sUmolUK0tJXF9LI9sUoCkx/VgADGY972/nIf3/nmSoJs5eYYq9zXhzEyWFGhc4123qWgsn0D6zZXQ==",
+      "type": "package",
+      "path": "oneof/3.0.211",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net35/OneOf.dll",
+        "lib/net45/OneOf.dll",
+        "lib/netstandard1.3/OneOf.dll",
+        "lib/netstandard2.0/OneOf.dll",
+        "oneof.3.0.211.nupkg.sha512",
+        "oneof.nuspec"
+      ]
+    },
     "SixLabors.ImageSharp/1.0.4": {
       "sha512": "H2rPiEr2ddBOltOuqRYhpLBAsQXDAhbzMMhhuksnBG2oefup1MXMchALe7yYkKJksNbtxbZHKeM6dn/68I75qw==",
       "type": "package",
@@ -2092,6 +2116,7 @@
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 11.0.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 6.0.1",
       "Microsoft.EntityFrameworkCore.SqlServer >= 6.0.1",
+      "OneOf >= 3.0.211",
       "SixLabors.ImageSharp >= 1.0.4",
       "Swashbuckle.AspNetCore >= 6.2.3",
       "System.IdentityModel.Tokens.Jwt >= 6.15.1"
@@ -2151,6 +2176,10 @@
           "Microsoft.EntityFrameworkCore.SqlServer": {
             "target": "Package",
             "version": "[6.0.1, )"
+          },
+          "OneOf": {
+            "target": "Package",
+            "version": "[3.0.211, )"
           },
           "SixLabors.ImageSharp": {
             "target": "Package",

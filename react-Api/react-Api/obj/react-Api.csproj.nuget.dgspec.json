@@ -56,6 +56,10 @@
               "target": "Package",
               "version": "[6.0.1, )"
             },
+            "OneOf": {
+              "target": "Package",
+              "version": "[3.0.211, )"
+            },
             "SixLabors.ImageSharp": {
               "target": "Package",
               "version": "[1.0.4, )"

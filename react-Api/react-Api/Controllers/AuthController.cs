@@ -1,12 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using react_Api.Database;
-using react_Api.Database.Models;
 using react_Api.Models;
 using react_Api.Services;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace react_Api.Controllers
@@ -15,82 +10,41 @@ namespace react_Api.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly DatabaseContext dbContext;
-        private readonly string passwordKey = string.Empty;
-        private readonly string accessTokenKey = string.Empty;
-        private readonly string refreshTokenKey = string.Empty;
+        private readonly AuthService authService;
 
-        public AuthController(
-            DatabaseContext databaseContext,
-            IConfiguration configuration)
+        public AuthController(AuthService authService)
         {
-            this.dbContext = databaseContext;
-            passwordKey = configuration.GetValue<string>("Secrets:PasswordSecret");
-            accessTokenKey = configuration.GetValue<string>("Secrets:JwtAccessSecret");
-            refreshTokenKey = configuration.GetValue<string>("Secrets:JwtRefreshSecret");
+            this.authService = authService;
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginModel login)
         {
-            var user = await dbContext.Users
-                .AsNoTracking()
-                .Select(x => new
+            var result = await authService.Login(login);
+
+            return result.Match<IActionResult>(
+                success =>
                 {
-                    x.Id,
-                    x.Email,
-                    x.Password,
-                    Role = x.Role.Name,
-                })
-                .FirstOrDefaultAsync(x => x.Email == login.Email);
+                    Response.Cookies.Append("token", success.RefrechToken, new Microsoft.AspNetCore.Http.CookieOptions
+                    {
+                        MaxAge = TimeSpan.FromDays(15)
+                    });
 
-            var hashPassword = HashService.Hash(login.Password, passwordKey);
-
-            if (user is not null && user.Password == hashPassword)
-            {
-                GenerateTokens(user.Id, user.Email, user.Role, out string accessToken, out string refreshToken);
-
-                await dbContext.Tokens.AddAsync(new Token
-                {
-                    UserId = user.Id,
-                    RefreshToken = refreshToken
-                });
-                await dbContext.SaveChangesAsync();
-
-                Response.Cookies.Append("token", refreshToken, new Microsoft.AspNetCore.Http.CookieOptions
-                {
-                    MaxAge = TimeSpan.FromDays(30)
-                });
-
-                return Ok(new { token = accessToken });
-            }
-
-            return BadRequest(new { error = "Неверный email или пароль." });
+                    return Ok(success);
+                },
+                faild => BadRequest(Errors.NotCorrectEmailOrPassword)
+            );
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterModel register)
         {
-            var exists = await dbContext.Users
-                .AnyAsync(e => e.Email == register.Email);
+            var result = await authService.Register(register);
 
-            if (exists)
-            {
-                return BadRequest(new { error = "Пользователь с таким email уже существует." });
-            }
-
-            var user = new User
-            {
-                Email = register.Email,
-                Login = register.Login,
-                Password = register.Password,
-                RoleId = 2
-            };
-
-            await dbContext.AddAsync(user);
-            await dbContext.SaveChangesAsync();
-
-            return CreatedAtAction("Register", user);
+            return result.Match<IActionResult>(
+                user => CreatedAtAction("Register", new { user.Id }),
+                exists => BadRequest(Errors.UserAlreadyExists)
+            );
         }
 
         [HttpPost("logout")]
@@ -100,8 +54,7 @@ namespace react_Api.Controllers
 
             if (refreshToken is not null)
             {
-                await dbContext.Database.ExecuteSqlInterpolatedAsync(
-                    $"DELETE FROM [Tokens] WHERE [RefreshToken] LIKE {refreshToken}");
+                await authService.Logout(refreshToken);
 
                 Response.Cookies.Delete("token");
             }
@@ -114,63 +67,16 @@ namespace react_Api.Controllers
         {
             var cookieToken = Request.Cookies["token"];
 
-            if (cookieToken is null)
-            {
-                return Unauthorized();
-            }
+            var result = await authService.Refresh(cookieToken);
 
-            var dbToken = await dbContext.Tokens
-                .AsNoTracking()
-                .Select(x => new
+            return result.Match<IActionResult>(
+                success => Ok(new { token = success.AccessToken }),
+                faild =>
                 {
-                    x.UserId,
-                    x.User.Email,
-                    x.RefreshToken,
-                    RoleName = x.User.Role.Name
-                })
-                .FirstOrDefaultAsync(x => x.RefreshToken == cookieToken);
-
-            if (dbToken is null)
-            {
-                Response.Cookies.Delete("token");
-
-                return Unauthorized();
-            }
-
-            var valid = JwtService.ValidateToken(dbToken.RefreshToken, refreshTokenKey);
-
-            if (!valid)
-            {
-                await dbContext.Database.ExecuteSqlInterpolatedAsync(
-                   $"DELETE FROM [Tokens] WHERE [RefreshToken] LIKE {dbToken.RefreshToken}");
-
-                Response.Cookies.Delete("token");
-
-                return Unauthorized();
-            }
-
-            GenerateTokens(dbToken.UserId, dbToken.Email, dbToken.RoleName, out string accessToken, out string refreshToken);
-
-            await dbContext.Database.ExecuteSqlInterpolatedAsync(
-                $"UPDATE [Tokens] SET [RefreshToken] = {dbToken.RefreshToken} WHERE [Id] = {dbToken.UserId}");
-
-            return Ok(new { token = accessToken });
-        }
-
-        private void GenerateTokens(int id, string email, string role, out string accessToken, out string refreshToken)
-        {
-            accessToken = JwtService.Generate(
-                            id,
-                            email,
-                            role,
-                            accessTokenKey,
-                            DateTime.Now.AddMinutes(15));
-            refreshToken = JwtService.Generate(
-                            id,
-                            email,
-                            role,
-                            refreshTokenKey,
-                            DateTime.Now.AddDays(15));
+                    Response.Cookies.Delete("token");
+                    return Unauthorized();
+                }
+           );
         }
     }
 }

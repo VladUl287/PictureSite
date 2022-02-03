@@ -12,6 +12,7 @@
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "11.0.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "6.0.1",
           "Microsoft.EntityFrameworkCore.SqlServer": "6.0.1",
+          "OneOf": "3.0.211",
           "SixLabors.ImageSharp": "1.0.4",
           "Swashbuckle.AspNetCore": "6.2.3",
           "System.IdentityModel.Tokens.Jwt": "6.15.1"
@@ -306,6 +307,14 @@
             "assetType": "runtime",
             "assemblyVersion": "4.0.2.0",
             "fileVersion": "4.700.19.56404"
+          }
+        }
+      },
+      "OneOf/3.0.211": {
+        "runtime": {
+          "lib/netstandard2.0/OneOf.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
           }
         }
       },
@@ -719,6 +728,13 @@
       "sha512": "sha512-mtVirZr++rq+XCDITMUdnETD59XoeMxSpLRIII7JRI6Yj0LEDiO1pPn0ktlnIj12Ix8bfvQqQDMMIF9wC98oCA==",
       "path": "microsoft.win32.systemevents/4.7.0",
       "hashPath": "microsoft.win32.systemevents.4.7.0.nupkg.sha512"
+    },
+    "OneOf/3.0.211": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-c1VHL1J28sUmolUK0tJXF9LI9sUoCkx/VgADGY972/nIf3/nmSoJs5eYYq9zXhzEyWFGhc4123qWgsn0D6zZXQ==",
+      "path": "oneof/3.0.211",
+      "hashPath": "oneof.3.0.211.nupkg.sha512"
     },
     "SixLabors.ImageSharp/1.0.4": {
       "type": "package",

@@ -10,6 +10,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using react_Api.Database;
+using react_Api.Services;
+using react_Api.Services.Contract;
 using System;
 using System.Text;
 
@@ -50,6 +52,10 @@ namespace react_Api
                       IssuerSigningKey = new SymmetricSecurityKey(key),
                   };
               });
+
+            services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IPictureService, PictureService>();
+            services.AddTransient<ITagService, TagService>();
 
             services.AddSwaggerGen(opt =>
             {
@@ -109,7 +115,7 @@ namespace react_Api
             {
                 MinimumSameSitePolicy = SameSiteMode.None,
                 HttpOnly = HttpOnlyPolicy.Always,
-                Secure = CookieSecurePolicy.Always,
+                Secure = CookieSecurePolicy.Always
             });
 
             app.UseAuthentication();

@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using react_Api.Database;
 using react_Api.Database.Models;
+using react_Api.Services;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace react_Api.Controllers
@@ -12,19 +10,17 @@ namespace react_Api.Controllers
     [ApiController]
     public class TagController : ControllerBase
     {
-        private readonly DatabaseContext dbContext;
+        private readonly TagService tagService;
 
-        public TagController(DatabaseContext dbContext)
+        public TagController(TagService tagService)
         {
-            this.dbContext = dbContext;
+            this.tagService = tagService;
         }
 
         [HttpGet("search")]
-        public async Task<IEnumerable<Tag>> Search([FromQuery] string name)
+        public async Task<IEnumerable<Tag>> Search([FromQuery] string name, [FromQuery] int size = 10)
         {
-            return await dbContext.Tags
-                .Where(e => e.Name.Contains(name))
-                .ToListAsync();
+            return await tagService.Search(name, size);
         }
     }
 }
