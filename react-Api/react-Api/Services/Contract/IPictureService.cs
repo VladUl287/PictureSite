@@ -4,9 +4,9 @@ using react_Api.Models;
 using react_Api.ModelsDto;
 using react_Api.ViewModels;
 using SixLabors.ImageSharp;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace react_Api.Services.Contract
 {
@@ -18,7 +18,7 @@ namespace react_Api.Services.Contract
 
         Task<List<PictureModel>> GetAll(int size = 0, int page = 0);
 
-        Task<IEnumerable<PictureModel>> GetByTag(int id, int size = 0, int page = 0);
+        Task<List<PictureModel>> GetByTag(int id, int size = 0, int page = 0);
 
         Task<OneOf<Picture, NotCorrectData>> Create(CreatePictureModel createModel);
 

@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { pictureService } from "../../http/services/pictureService";
 import { PictureModel } from "../../models/PictureModel";
+import Tags from '../tag/Tags';
+import { TagModel } from '../../models/TagModel';
 
 type Size = {
     width: number,
@@ -13,21 +15,21 @@ const Picture = () => {
 
     const { id } = useParams();
     const navigate = useNavigate();
-
+    const [picture, setPicture] = useState<PictureModel>();
+    const [sizes, setSizes] = useState<Size[]>([]);
+    
     if (!id) {
         navigate("/Main");
     }
 
-    const [picture, setPicture] = useState<PictureModel>();
-    const [sizes, setSizes] = useState<Size[]>([]);
-
     const pictureId = +id!;
+
     useEffect(() => {
         pictureService.getMainPicture(pictureId).then(
             (data: any) => {
                 setPicture(data.data);
-                let sizes = new Array<Size>();
 
+                let sizes = new Array<Size>();
                 sizes.push({ width: data.data.originalWidth, height: data.data.originalHeight } as Size);
 
                 let height = Math.round(data.data.originalHeight / (data.data.originalWidth / 1920));
@@ -49,14 +51,14 @@ const Picture = () => {
                 const url = window.URL.createObjectURL(data.data);
                 const link = document.createElement('a');
                 link.href = url;
-                link.setAttribute('download', 'file.jpeg');
+                link.setAttribute('download', 'image.jpeg');
                 document.body.appendChild(link);
                 link.click();
             });
     }
 
-    const clickHandle = (id: number) => {
-        navigate('/main?tag=' + id);
+    const clickHandle = (tag: TagModel) => {
+        navigate('/main?tag=' + tag.id);
     }
 
     return (
@@ -89,20 +91,10 @@ const Picture = () => {
                             </div>
                         </div>
                     </div>
-                    <div className={styles.tagZone}>
-                        {picture.tags.map(tag => (
-                            <div
-                                key={tag.id}
-                                className={styles.selectedTag}
-                                onClick={() => clickHandle(tag.id)}
-                            >
-                                <p>{tag.name}</p>
-                            </div>
-                        ))}
-                    </div>
+                    <Tags tags={picture.tags} clickHandle={clickHandle} />
                 </div>
             ) :
-                <div>none</div>}
+                <div>Loading</div>}
         </div>
     );
 }

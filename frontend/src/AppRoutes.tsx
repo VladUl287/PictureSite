@@ -38,9 +38,9 @@ const AppRoutes: FC<RouteProps> = (props: RouteProps) => {
 const AuthGuard = ({ children }: { children: JSX.Element }) => {
     const isAuth = useSelector((state: IState) => state.auth.isAuth);
 
-    // if (!localStorage.getItem('token') || !isAuth) {
-    //     return <Navigate to="/auth" />;
-    // }
+    if (!localStorage.getItem('token') || !isAuth) {
+        return <Navigate to="/auth" />;
+    }
 
     return children;
 }

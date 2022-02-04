@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
 using react_Api.Models;
-using react_Api.Services;
-using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using react_Api.Services.Contract;
 
 namespace react_Api.Controllers
 {
@@ -10,9 +10,9 @@ namespace react_Api.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly AuthService authService;
+        private readonly IAuthService authService;
 
-        public AuthController(AuthService authService)
+        public AuthController(IAuthService authService)
         {
             this.authService = authService;
         }
@@ -25,7 +25,7 @@ namespace react_Api.Controllers
             return result.Match<IActionResult>(
                 success =>
                 {
-                    Response.Cookies.Append("token", success.RefrechToken, new Microsoft.AspNetCore.Http.CookieOptions
+                    Response.Cookies.Append("token", success.RefreshToken, new Microsoft.AspNetCore.Http.CookieOptions
                     {
                         MaxAge = TimeSpan.FromDays(15)
                     });
@@ -70,7 +70,7 @@ namespace react_Api.Controllers
             var result = await authService.Refresh(cookieToken);
 
             return result.Match<IActionResult>(
-                success => Ok(new { token = success.AccessToken }),
+                success => Ok(success),
                 faild =>
                 {
                     Response.Cookies.Delete("token");

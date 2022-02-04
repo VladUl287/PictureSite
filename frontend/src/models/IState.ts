@@ -1,6 +1,5 @@
 import { PictureModel } from './PictureModel';
 import { IUser } from './IUser';
-import { TagModel } from './TagModel';
 
 export interface IState {
     auth: {
@@ -9,6 +8,5 @@ export interface IState {
     }
     picture: {
         pictures: PictureModel[]
-        tags: TagModel[]
     }
 }

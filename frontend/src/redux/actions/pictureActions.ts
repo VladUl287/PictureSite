@@ -4,12 +4,14 @@ import { pictureService } from '../../http/services/pictureService';
 export const getPictures = () => async (dispatch: Function) => {
     let result = await pictureService.getPictures();
     
-    dispatch({
-        type: SET_PICTURES,
-        payload: {
-            pictures: result.data,
-        }
-    });
+    if(result.status === 200) {
+        dispatch({
+            type: SET_PICTURES,
+            payload: {
+                pictures: result.data,
+            }
+        });
+    }
 }
 
 export const getPicturesByTag = (id: number) => async (dispatch: Function) => {

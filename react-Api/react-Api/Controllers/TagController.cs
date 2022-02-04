@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using react_Api.Database.Models;
-using react_Api.Services;
+using react_Api.Services.Contract;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -10,9 +10,9 @@ namespace react_Api.Controllers
     [ApiController]
     public class TagController : ControllerBase
     {
-        private readonly TagService tagService;
+        private readonly ITagService tagService;
 
-        public TagController(TagService tagService)
+        public TagController(ITagService tagService)
         {
             this.tagService = tagService;
         }

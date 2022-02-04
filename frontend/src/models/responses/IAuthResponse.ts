@@ -1,3 +1,6 @@
 export interface IAuthResponse {
-    token: string
+    id: number,
+    email: string,
+    accessToken: string,
+    refreshToken: string
 }

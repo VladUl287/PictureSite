@@ -64,7 +64,7 @@ namespace react_Api.Services
                 Id = user.Id,
                 Email = user.Email,
                 AccessToken = accessToken,
-                RefrechToken = refreshToken
+                RefreshToken = refreshToken
             };
         }
 
@@ -131,7 +131,7 @@ namespace react_Api.Services
             await dbContext.Database.ExecuteSqlInterpolatedAsync(
                 $"UPDATE [Tokens] SET [RefreshToken] = {dbToken.RefreshToken} WHERE [Id] = {dbToken.UserId}");
 
-            return new LoginSuccess { AccessToken = accessToken, RefrechToken = refreshToken };
+            return new LoginSuccess { AccessToken = accessToken, RefreshToken = refreshToken };
         }
 
         private void GenerateTokens(int id, string email, string role, out string accessToken, out string refreshToken)

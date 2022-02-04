@@ -35,7 +35,7 @@ const AuthContainer: FC = () => {
                 setLoad(false);
             })
             .catch((error: any) => {
-                addToast(error.response.data.error, {
+                addToast(error.response.data.errorMessage, {
                     appearance: 'error'
                 });
                 setLoad(false);
@@ -49,7 +49,7 @@ const AuthContainer: FC = () => {
             setToggle(false);
             reset();
         } catch (error: any) {
-            addToast(error.response.data.error, {
+            addToast(error.response.data.errorMessage, {
                 appearance: 'error'
             });
         } finally {

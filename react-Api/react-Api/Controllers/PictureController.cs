@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using react_Api.Models;
 using react_Api.ModelsDto;
-using react_Api.Services;
+using react_Api.Services.Contract;
 using react_Api.ViewModels;
 using SixLabors.ImageSharp;
 using System.Collections.Generic;
@@ -13,9 +13,9 @@ namespace react_Api.Controllers
     [ApiController]
     public class PictureController : ControllerBase
     {
-        private readonly PictureService pictureService;
+        private readonly IPictureService pictureService;
 
-        public PictureController(PictureService pictureService)
+        public PictureController(IPictureService pictureService)
         {
             this.pictureService = pictureService;
         }
@@ -25,11 +25,7 @@ namespace react_Api.Controllers
         {
             var result = await pictureService.GetAll(size, page);
 
-            for (int i = 0; i < result.Count; i++)
-            {
-                result[i].View = $"{Request.Scheme}://{Request.Host}" +
-                   $"{Url.Action(nameof(GetPicture), "Picture", new { id = result[i].Id })}";
-            }
+            SetUrl(result);
 
             return Ok(result);
         }
@@ -68,7 +64,11 @@ namespace react_Api.Controllers
         [HttpGet("tag/{id:int}")]
         public async Task<IEnumerable<PictureModel>> GetByTag([FromRoute] int id, [FromQuery] int size = 0, [FromQuery] int page = 0)
         {
-            return await pictureService.GetByTag(id, size, page);
+            var pictures = await pictureService.GetByTag(id, size, page);
+
+            SetUrl(pictures);
+
+            return pictures;
         }
 
         [HttpPost("create")]
@@ -80,6 +80,15 @@ namespace react_Api.Controllers
                 picture => CreatedAtAction("Create", new { picture.Id }),
                 faild => BadRequest(Errors.NotCorrectImage)
             );
+        }
+
+        private void SetUrl(List<PictureModel> result)
+        {
+            for (int i = 0; i < result.Count; i++)
+            {
+                result[i].View = $"{Request.Scheme}://{Request.Host}" +
+                   $"{Url.Action(nameof(GetPicture), "Picture", new { id = result[i].Id })}";
+            }
         }
     }
 }

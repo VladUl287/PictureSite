@@ -21,7 +21,7 @@ const Main: FC = () => {
             dispatch(getPictures());
         }
     }, [searchParams]);
-
+    
     return (
         <div>
             <div className={styles.masonry}>
@@ -32,13 +32,6 @@ const Main: FC = () => {
                                 src={image.view}
                             />
                         </Link>
-                    </div>
-                ))}
-                {images.reverse().map(image => (
-                    <div key={image.id} className={styles.masonryItem}>
-                        <LazyLoadImage
-                            src={image.view}
-                        />
                     </div>
                 ))}
             </div>

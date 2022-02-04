@@ -1,12 +1,13 @@
-import { SyntheticEvent, useState } from "react";
-import { TagModel } from "../../models/TagModel";
+import React, { useState, BaseSyntheticEvent, FC } from "react";
 import styles from './Create.module.css';
-import React, { BaseSyntheticEvent } from 'react';
+import { TagModel } from "../../models/TagModel";
 import { pictureService } from "../../http/services/pictureService";
+import Tags from "../tag/Tags";
 
 const CreateImage = () => {
     const [tags, setTags] = useState<TagModel[]>([]);
     const [picture, setPicture] = useState<File | null>();
+    const [enteredText, setEnteredText] = useState<string>('');
     const [selectTags, setSelectTags] = useState<TagModel[]>([]);
 
     const selectImg = React.useRef<HTMLImageElement>(null);
@@ -43,19 +44,17 @@ const CreateImage = () => {
         }
     };
 
-    const select = (tag: TagModel) => {
+    const selectClick = (tag: TagModel) => {
         let index = selectTags.findIndex(e => e.id == tag.id);
         if (index > -1) {
             return;
         }
-        else {
-            setSelectTags([...selectTags, tag]);
-            setTags([]);
-        }
+        setSelectTags([...selectTags, tag]);
+        setTags([]);
     }
 
 
-    const unselect = (tag: TagModel) => {
+    const unselectClick = (tag: TagModel) => {
         let index = selectTags.findIndex(e => e.id == tag.id);
         if (index > -1) {
             selectTags.splice(index, 1);
@@ -63,16 +62,16 @@ const CreateImage = () => {
         }
     }
 
-    const [enteredText, setEnteredText] = useState<string>('');
     const onkeydown = (e: React.KeyboardEvent) => {
-        if(e.key === 'Enter' && enteredText.length > 0) {
+        if (e.key === 'Enter' && enteredText.length > 0) {
             setSelectTags([...selectTags, new TagModel(0, enteredText)]);
             setEnteredText('');
+            setTags([]);
         }
     }
 
     const tagChange = (e: BaseSyntheticEvent) => {
-        if (e.target.value.length == 0) {
+        if (e.target.value.length === 0) {
             setTags([]);
             return;
         }
@@ -88,15 +87,16 @@ const CreateImage = () => {
         <div className={styles.createWrap}>
             <div className={styles.selectFileWrap}>
                 <input
+                    hidden
                     type='file'
                     ref={hiddenFileInput}
                     onChange={handleChange}
                     accept="image/png, image/jpg, image/jpeg"
-                    hidden
                 />
                 <button
                     className={styles.fileInput}
-                    onClick={handleClick}>
+                    onClick={handleClick}
+                >
                     Выбрать изображение
                 </button>
                 <div>
@@ -107,32 +107,22 @@ const CreateImage = () => {
                 <div className={styles.searchTags}>
                     <input
                         type="text"
-                        onChange={tagChange}
                         placeholder='теги'
+                        onChange={tagChange}
                         onKeyDown={onkeydown}
                     />
                     <div className={styles.searchResult}>
                         {tags.map((tag: TagModel) => (
                             <div
                                 key={tag.id}
-                                onClick={() => select(tag)}
+                                onClick={() => selectClick(tag)}
                             >
                                 <p>{tag.name}</p>
                             </div>
                         ))}
                     </div>
                 </div>
-                <div className={styles.selectedTags}>
-                    {selectTags.map((tag, i) => (
-                        <div
-                            key={i}
-                            className={styles.selectedTag}
-                            onClick={() => unselect(tag)}
-                        >
-                            <p>{tag.name}</p>
-                        </div>
-                    ))}
-                </div>
+                <Tags tags={selectTags} clickHandle={unselectClick} />
             </div>
             <div className={styles.imgZone}>
                 <button
@@ -154,4 +144,4 @@ const CreateImage = () => {
     );
 }
 
-export default CreateImage; 
+export default CreateImage;

@@ -4,13 +4,14 @@ import { LOGIN, LOGOUT } from '../types';
 
 export const userLogin = (email: string, password: string) => async (dispatch: Function) => {
     let result = await authService.login(email, password);
-    if (result.status === 200) {
-        localStorage.setItem('token', result.data.token);
 
+    if (result.status === 200) {
+        localStorage.setItem('token', result.data.accessToken);
+    
         dispatch({
             type: LOGIN,
             payload: {
-                token: result.data.token,
+                token: result.data.accessToken,
             }
         });
     }
@@ -29,12 +30,12 @@ export const userLogout = () => async (dispatch: Function) => {
 export const checkAuth = () => async (dispatch: Dispatch<any>) => {
     try {
         const result = await authService.refresh();
-        localStorage.setItem('token', result.data.token);
+        localStorage.setItem('token', result.data.accessToken);
 
         dispatch({
             type: LOGIN,
             payload: {
-                token: result.data.token,
+                token: result.data.accessToken,
             }
         });
     } catch {

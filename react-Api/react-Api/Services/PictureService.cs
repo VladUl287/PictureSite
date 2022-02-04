@@ -76,7 +76,7 @@ namespace react_Api.Services
                 .FirstOrDefaultAsync(e => e.Id == id);
         }
 
-        public async Task<IEnumerable<PictureModel>> GetByTag(int id, int size = 0, int page = 0)
+        public async Task<List<PictureModel>> GetByTag(int id, int size = 0, int page = 0)
         {
             var query = from e in dbContext.PicturesTags
                         where e.TagId == id
@@ -107,7 +107,7 @@ namespace react_Api.Services
 
             var name = await dbContext.Pictures
                 .Where(e => e.Id == id)
-                .Select(e => new { e.Name, e.OriginalWidth, e.OriginalHeight })
+                .Select(e => e.Name)
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
 

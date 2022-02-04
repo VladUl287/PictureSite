@@ -10,7 +10,7 @@ const login = (email: string, password: string): Promise<AxiosResponse<IAuthResp
         });
 }
 
-const register = (email: string, login: string, password: string): Promise<AxiosResponse<IAuthResponse>> => {
+const register = (email: string, login: string, password: string): Promise<AxiosResponse> => {
     return instance.post('api/auth/register',
         {
             email,

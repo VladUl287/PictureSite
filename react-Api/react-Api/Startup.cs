@@ -53,9 +53,9 @@ namespace react_Api
                   };
               });
 
-            services.AddTransient<IAuthService, AuthService>();
-            services.AddTransient<IPictureService, PictureService>();
-            services.AddTransient<ITagService, TagService>();
+            services.AddScoped<ITagService, TagService>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IPictureService, PictureService>();
 
             services.AddSwaggerGen(opt =>
             {

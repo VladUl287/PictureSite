@@ -1,10 +1,8 @@
 import { PictureModel } from "../../models/PictureModel";
-import { TagModel } from "../../models/TagModel";
-import { SET_PICTURES, SET_TAGS } from "../types";
+import { SET_PICTURES } from "../types";
 
 const initialState = {
-    pictures: new Array<PictureModel>(),
-    tags: new Array<TagModel>()
+    pictures: new Array<PictureModel>()
 }
 
 export const pictureReducer = (state = initialState, action: PictureAction) => {
@@ -15,11 +13,6 @@ export const pictureReducer = (state = initialState, action: PictureAction) => {
                 ...state,
                 pictures: payload.pictures
             }
-        case SET_TAGS:
-            return {
-                ...state,
-                tags: payload.tags
-            }
         default:
             return state;
     }
@@ -28,7 +21,6 @@ export const pictureReducer = (state = initialState, action: PictureAction) => {
 type PictureAction = {
     type: string,
     payload: {
-        pictures: PictureModel[],
-        tags: TagModel[]
+        pictures: PictureModel[]
     }
 }

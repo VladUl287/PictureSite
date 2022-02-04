@@ -30,8 +30,7 @@ const App: FC = () => {
 
   return (
     <div className="App">
-      {/* {isAuth && <Navbar />} */}
-      <Navbar />
+      {isAuth && <Navbar />}
       <AppRoutes isAuth />
     </div>
   );
